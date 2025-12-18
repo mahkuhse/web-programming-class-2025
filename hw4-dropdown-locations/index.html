@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Location Selector - Homework 4</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+		body { margin: 30px; }
+		h1 { color: #069; }
+		.container {
+			width: 500px;
+			margin: 20px auto;
+		}
+		label { font-weight: bold; }
+	</style>
+</head>
+<body>
+	<h1>Location Selector</h1>
+	<p>Homework 4</p>
+
+	<div class="container">
+		<label>State:</label>
+		<select id="state" class="form-select" onchange="loadCities()">
+			<option value="">Select a state</option>
+			<option value="NY">New York</option>
+			<option value="CA">California</option>
+			<option value="TX">Texas</option>
+		</select>
+		<br>
+
+		<label>City:</label>
+		<select id="city" class="form-select" onchange="loadCounties()" disabled>
+			<option value="">Select a city</option>
+		</select>
+		<br>
+
+		<label>County:</label>
+		<select id="county" class="form-select" onchange="loadVillages()" disabled>
+			<option value="">Select a county</option>
+		</select>
+		<br>
+
+		<label>Village:</label>
+		<select id="village" class="form-select" onchange="showSelection()" disabled>
+			<option value="">Select a village</option>
+		</select>
+		<br>
+
+		<div id="output"></div>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript">
+		var locationData = {
+			NY: {
+				"New York City": {
+					"Manhattan": ["Greenwich Village", "East Village", "Chelsea"],
+					"Brooklyn": ["Williamsburg", "Park Slope", "DUMBO"],
+					"Queens": ["Astoria", "Flushing", "Long Island City"]
+				},
+				"Buffalo": {
+					"Erie": ["Kenmore", "Tonawanda", "Cheektowaga"],
+					"Niagara": ["Niagara Falls", "Lewiston", "Lockport"],
+					"Chautauqua": ["Jamestown", "Dunkirk", "Fredonia"]
+				},
+				"Albany": {
+					"Albany County": ["Colonie", "Watervliet", "Cohoes"],
+					"Rensselaer": ["Troy", "Rensselaer", "East Greenbush"],
+					"Schenectady": ["Schenectady", "Rotterdam", "Niskayuna"]
+				}
+			},
+			CA: {
+				"Los Angeles": {
+					"Los Angeles County": ["Santa Monica", "Beverly Hills", "Pasadena"],
+					"Orange County": ["Anaheim", "Irvine", "Huntington Beach"],
+					"Ventura County": ["Oxnard", "Thousand Oaks", "Simi Valley"]
+				},
+				"San Francisco": {
+					"San Francisco County": ["Noe Valley", "Mission District", "Pacific Heights"],
+					"San Mateo County": ["Redwood City", "San Mateo", "Burlingame"],
+					"Marin County": ["Sausalito", "Mill Valley", "Novato"]
+				},
+				"San Diego": {
+					"San Diego County": ["La Jolla", "Coronado", "Del Mar"],
+					"Imperial County": ["El Centro", "Calexico", "Brawley"],
+					"Riverside County": ["Riverside", "Corona", "Temecula"]
+				}
+			},
+			TX: {
+				"Houston": {
+					"Harris": ["Bellaire", "West University Place", "Katy"],
+					"Fort Bend": ["Sugar Land", "Missouri City", "Stafford"],
+					"Montgomery": ["The Woodlands", "Conroe", "Magnolia"]
+				},
+				"Dallas": {
+					"Dallas County": ["Irving", "Garland", "Richardson"],
+					"Collin": ["Plano", "McKinney", "Frisco"],
+					"Denton": ["Denton", "Lewisville", "Flower Mound"]
+				},
+				"Austin": {
+					"Travis": ["Round Rock", "Pflugerville", "Cedar Park"],
+					"Williamson": ["Georgetown", "Leander", "Taylor"],
+					"Hays": ["San Marcos", "Kyle", "Buda"]
+				}
+			}
+		};
+
+		function loadCities() {
+			var stateSelect = document.getElementById('state');
+			var citySelect = document.getElementById('city');
+			var state = stateSelect.value;
+
+			citySelect.innerHTML = '<option value="">Select a city</option>';
+
+			if (state) {
+				var cities = Object.keys(locationData[state]);
+				for (var i = 0; i < cities.length; i++) {
+					var option = document.createElement('option');
+					option.value = cities[i];
+					option.textContent = cities[i];
+					citySelect.appendChild(option);
+				}
+				citySelect.disabled = false;
+			} else {
+				citySelect.disabled = true;
+			}
+
+			document.getElementById('county').innerHTML = '<option value="">Select a county</option>';
+			document.getElementById('county').disabled = true;
+			document.getElementById('village').innerHTML = '<option value="">Select a village</option>';
+			document.getElementById('village').disabled = true;
+			document.getElementById('output').innerHTML = '';
+		}
+
+		function loadCounties() {
+			var state = document.getElementById('state').value;
+			var city = document.getElementById('city').value;
+			var countySelect = document.getElementById('county');
+
+			countySelect.innerHTML = '<option value="">Select a county</option>';
+
+			if (city) {
+				var counties = Object.keys(locationData[state][city]);
+				for (var i = 0; i < counties.length; i++) {
+					var option = document.createElement('option');
+					option.value = counties[i];
+					option.textContent = counties[i];
+					countySelect.appendChild(option);
+				}
+				countySelect.disabled = false;
+			} else {
+				countySelect.disabled = true;
+			}
+
+			document.getElementById('village').innerHTML = '<option value="">Select a village</option>';
+			document.getElementById('village').disabled = true;
+			document.getElementById('output').innerHTML = '';
+		}
+
+		function loadVillages() {
+			var state = document.getElementById('state').value;
+			var city = document.getElementById('city').value;
+			var county = document.getElementById('county').value;
+			var villageSelect = document.getElementById('village');
+
+			villageSelect.innerHTML = '<option value="">Select a village</option>';
+
+			if (county) {
+				var villages = locationData[state][city][county];
+				for (var i = 0; i < villages.length; i++) {
+					var option = document.createElement('option');
+					option.value = villages[i];
+					option.textContent = villages[i];
+					villageSelect.appendChild(option);
+				}
+				villageSelect.disabled = false;
+			} else {
+				villageSelect.disabled = true;
+			}
+
+			document.getElementById('output').innerHTML = '';
+		}
+
+		function showSelection() {
+			var state = document.getElementById('state').value;
+			var city = document.getElementById('city').value;
+			var county = document.getElementById('county').value;
+			var village = document.getElementById('village').value;
+
+			if (village) {
+				document.getElementById('output').innerHTML = '<p>' + village + ', ' + county + ', ' + city + ', ' + state + '</p>';
+			}
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>NY Times Search - Homework 8</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+		body { margin: 30px; }
+		h1 { color: #069; }
+		.article-card {
+			border: 1px solid #ddd;
+			padding: 15px;
+			margin-bottom: 15px;
+			background-color: #f9f9f9;
+		}
+	</style>
+</head>
+<body>
+	<h1>NY Times Article Search</h1>
+	<p>Homework 8</p>
+
+	<label>Search for articles:</label>
+	<input type="text" id="searchInput" class="form-control" style="width:400px;">
+	<br>
+	<button onclick="searchArticles()" class="btn btn-primary">Search</button>
+	<br><br>
+
+	<div id="loading" style="display:none;">
+		<p>Searching...</p>
+	</div>
+
+	<div id="results"></div>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript">
+		var API_KEY = 'N3DULVvd71PGNRYGnLevkLc5eGaqFPiYchIIfisPFaqAWVcl';
+
+		function searchArticles() {
+			var query = document.getElementById('searchInput').value;
+			document.getElementById('loading').style.display = 'block';
+			document.getElementById('results').innerHTML = '';
+			var url = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=' + query + '&api-key=' + API_KEY;
+			var xhr = new XMLHttpRequest();
+			xhr.open('GET', url, true);
+			xhr.onload = function() {
+				document.getElementById('loading').style.display = 'none';
+				if (xhr.status == 200) {
+					var data = JSON.parse(xhr.responseText);
+					if (data.response.docs.length > 0) {
+						displayResults(data.response.docs);
+					} else {
+						document.getElementById('results').innerHTML = '<p>No articles found.</p>';
+					}
+				} else {
+					document.getElementById('results').innerHTML = '<p>Error fetching articles.</p>';
+				}
+			};
+			xhr.onerror = function() {
+				document.getElementById('loading').style.display = 'none';
+			};
+			xhr.send();
+		}
+
+		function displayResults(articles) {
+			var output = '<h3>Results:</h3>';
+
+			for (var i = 0; i < articles.length; i++) {
+				var article = articles[i];
+				var title = article.headline.main;
+				var link = article.web_url;
+				var description = article.abstract;
+
+				if (!description) {
+					description = 'No description available';
+				}
+
+				var date = new Date(article.pub_date).toLocaleDateString();
+
+				output += '<div class="article-card">' +
+					'<h5><a href="' + link + '" target="_blank">' + title + '</a></h5>' +
+					'<p>' + description + '</p>' +
+					'<p style="color:#666;">Published: ' + date + '</p>' +
+					'</div>';
+			}
+
+			document.getElementById('results').innerHTML = output;
+		}
+	</script>
+</body>
+</html>

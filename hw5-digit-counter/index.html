@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Digit Counter - Homework 5</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+		body { margin: 30px; }
+		h1 { color: #069; }
+	</style>
+</head>
+<body>
+	<h1>Digit Counter</h1>
+	<p>Homework 5</p>
+
+	<label>Enter a number:</label>
+	<input type="text" id="numberInput" class="form-control" style="width:300px;">
+	<br>
+	<button onclick="countDigits()" class="btn btn-primary">Count Digits</button>
+	<br><br>
+
+	<div id="result"></div>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript">
+		function numOfDigits(num) {
+			var numString = num.toString();
+			return numString.length;
+		}
+
+		function countDigits() {
+			var input = document.getElementById('numberInput').value;
+			var number = parseInt(input);
+			var count = numOfDigits(number);
+			document.getElementById('result').innerHTML = '<p>The number ' + number + ' has ' + count + ' digits.</p>';
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Capitals to Front - Homework 6</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+		body { margin: 30px; }
+		h1 { color: #069; }
+	</style>
+</head>
+<body>
+	<h1>Capitals to Front</h1>
+	<p>Homework 6</p>
+
+	<label>Enter a word:</label>
+	<input type="text" id="wordInput" class="form-control" style="width:300px;">
+	<br>
+	<button onclick="moveCapitals()" class="btn btn-primary">Move Capitals</button>
+	<br><br>
+
+	<div id="result"></div>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript">
+		function capsToFront(word) {
+			var capitals = word.match(/[A-Z]/g);
+			var lowercase = word.match(/[a-z]/g);
+
+			if (!capitals) {
+				capitals = [];
+			}
+			if (!lowercase) {
+				lowercase = [];
+			}
+
+			return capitals.join('') + lowercase.join('');
+		}
+
+		function moveCapitals() {
+			var input = document.getElementById('wordInput').value;
+			var result = capsToFront(input);
+			document.getElementById('result').innerHTML = '<p>Original: ' + input + '<br>Result: ' + result + '</p>';
+		}
+	</script>
+</body>
+</html>

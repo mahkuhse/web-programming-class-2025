@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Reverse String - Homework 7</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+		body { margin: 30px; }
+		h1 { color: #069; }
+	</style>
+</head>
+<body>
+	<h1>Reverse a String</h1>
+	<p>Homework 7</p>
+
+	<label>Enter a string:</label>
+	<input type="text" id="stringInput" class="form-control" style="width:300px;">
+	<br>
+	<button onclick="reverseString()" class="btn btn-primary">Reverse String</button>
+	<br><br>
+
+	<div id="result"></div>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript">
+		function reverse(str) {
+			var reversed = '';
+			for (var i = str.length - 1; i >= 0; i--) {
+				reversed = reversed + str[i];
+			}
+			return reversed;
+		}
+
+		function reverseString() {
+			var input = document.getElementById('stringInput').value;
+			var result = reverse(input);
+			document.getElementById('result').innerHTML = '<p>Original: ' + input + '<br>Reversed: ' + result + '</p>';
+		}
+	</script>
+</body>
+</html>

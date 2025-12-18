@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Calculator - Homework 1</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+		body { margin: 30px; }
+		h1 { color: #069; }
+		.calculator {
+			width: 300px;
+			margin: 20px auto;
+			padding: 20px;
+			border: 1px solid #ccc;
+			background-color: #f3f3f3;
+		}
+		#display {
+			width: 100%;
+			padding: 10px;
+			font-size: 24px;
+			text-align: right;
+			margin-bottom: 10px;
+		}
+		button {
+			width: 70px;
+			height: 70px;
+			font-size: 18px;
+			margin: 2px;
+		}
+		.clear {
+			width: 298px;
+		}
+	</style>
+</head>
+<body>
+	<h1>Simple Calculator</h1>
+	<p>Homework 1</p>
+
+	<div class="calculator">
+		<input type="text" id="display" value="0" readonly>
+		<br>
+		<button>7</button>
+		<button>8</button>
+		<button>9</button>
+		<button>÷</button>
+		<br>
+		<button>4</button>
+		<button>5</button>
+		<button>6</button>
+		<button>×</button>
+		<br>
+		<button>1</button>
+		<button>2</button>
+		<button>3</button>
+		<button>-</button>
+		<br>
+		<button>0</button>
+		<button>.</button>
+		<button>=</button>
+		<button>+</button>
+		<br>
+		<button class="clear">C</button>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
